@@ -29,6 +29,11 @@ gem 'spring',        group: :development
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+#for rails chrome extension
+group :development do
+  gem 'meta_request'
+end
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

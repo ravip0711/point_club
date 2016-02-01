@@ -12,6 +12,9 @@
     <%= message %>
   <% end %>
   <div>
+    <% if logged_in? %>
+      <p><%= link_to "Log out", logout_path, method: "delete" %></p>
+    <% end %>
     <%= yield %>
     <%= render 'layouts/footer'  %>
   </div>

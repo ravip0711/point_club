@@ -1,0 +1,18 @@
+<h1>Everyone's Points</h1>
+
+<% @points.each do |point| %>
+  <% if signed_in? %>
+    <p>
+      Posted by:
+      <%= point.user.name %>
+    </p>
+  <% end %>
+  <h4><%= point.points_given %></h4>
+  <p><%= point.points_reason %></p>
+<% end %>
+
+<% if signed_in? %>
+  <%= link_to "Create a Point", new_point_path  %>
+  </br>
+  <%= link_to "Go to All Users", users_path %>
+<% end %>

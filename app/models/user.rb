@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-  attr_accessor :remember_token
+  has_many :points
+  
+  attr_accessor :create_remember_token
 
   before_save { self.email = email.downcase }
   validates :name, presence: true, length: { maximum: 50 }
@@ -13,20 +15,17 @@ class User < ActiveRecord::Base
 
 
   # Returns the hash digest of the given string.
-  def User.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-                                                  BCrypt::Engine.cost
-    BCrypt::Password.create(string, cost: cost)
+  def User.digest(token)
+    Digest::SHA1.hexdigest(token.to_s)
   end
 
   # Generates a random token
-  def User.new_token
+  def User.new_remember_token
     SecureRandom.urlsafe_base64
   end
 
-  def remember
-    self.remember_token = User.new_token
-    update_attribute(:remember_digest, User.digest(remember_token))
+  def create_remember_token
+    self.remember_token = User.digest(User.new_remember_token)
   end
 
   def authenticated?(remember_token)

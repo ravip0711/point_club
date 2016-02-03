@@ -1,0 +1,13 @@
+<h1>New Points</h1>
+
+<%= form_for(@point) do |f| %>
+<p>
+  <%= f.label :points_given %></br>
+  <%= f.number_field :points_given %>
+</p>
+<p>
+  <%= f.label :points_reason %></br>
+  <%= f.text_area :points_reason %>
+</p>
+  <%= f.submit "Submit"%> 
+<% end %>

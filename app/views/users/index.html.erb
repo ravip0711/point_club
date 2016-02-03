@@ -15,9 +15,11 @@
       <tr>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
+        <% if signed_in? && current_user.id == user.id %>
         <td><%= link_to 'Show', user_path(user) %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +28,4 @@
 </br>
 <%= link_to 'Everyones Points', points_path %>
 </br>
-<%= link_to 'New User', new_user_path %>
+

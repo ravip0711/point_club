@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :signed_in_user, except: [:index]
+  before_action :correct_user,   only: [:edit, :update, :destroy]
 
   def index
     @users = User.all
@@ -20,7 +22,7 @@ class UsersController < ApplicationController
     if @user.save
       sign_in(@user)
       flash[:success] = "Welcome to the Point Club!"
-      redirect_to @user
+      redirect_to users_path
     else
       render "new"
     end
@@ -44,6 +46,18 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def signed_in_user
+      unless signed_in?
+        redirect_to login_url
+      end
+    end
+
+     #confirms the correct user
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to(root_url) unless current_user
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
